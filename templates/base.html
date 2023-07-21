@@ -17,15 +17,14 @@
 <body>
     
 <nav>
-
     <form action="" methods="post"]>
         <div class="search">
             <div class="buscar">
-                <input type="text" placeholder="buscar" required>
+                <input class="" type="text" placeholder="Buscar" required>
                 <div class="btn-ico">
 
                     <button type="submit" value="buscar" class="btn-buscar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <span class="icon-search"></span>
                     </button>
                 </div>
             </div>
@@ -38,8 +37,9 @@
         <li><a href="{{url_for('home')}}">Inicio</a></li>
         <li><a href="">Nosotros</a></li>
         <li><a href="">Blog</a></li>
-        <a href="{{url_for('contacts')}}"><li><span class="icon-home2"></span></li></a>
-        <li><a href="{{url_for('registro')}}"><i class="fas fa-solid fa-address-book"></i></a></li>
+        <li><a href="{{url_for('registro')}}"><i class=" icomoon-nav-ico icon-home2"></i></a></li>
+        <a href="{{url_for('contacts')}}"><li><span class=" icomoon-nav-ico fas fa-solid fa-address-book"></span></li></a>
+        
     </ul>
 
     <label for="toogle" class="icon-bars">

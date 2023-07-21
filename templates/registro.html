@@ -38,7 +38,7 @@
 			      <i class=""></i>
 			    </span>
 			    <span class="icon is-small is-right">
-			      <i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
+			      <span class="icon-user"></span>
 			    </span>
 			  </div>
 			  <!-- <p class="help is-success">Nombre de Usuario Correcto</p> -->
@@ -59,9 +59,7 @@
 			    <span class="icon is-small is-left">
 			      <i class=""></i>
 			    </span>
-			    <span class="icon is-small is-right">
-			      <i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
-			    </span>
+			    
 			  </div>
 			  <!-- <p class="help is-success">Nombre de Usuario Correcto</p> -->
 			</div>
@@ -81,9 +79,7 @@
 			    <span class="icon is-small is-left">
 			      <i class=""></i>
 			    </span>
-			    <span class="icon is-small is-right">
-			      <i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
-			    </span>
+			    
 			  </div>
 			  <!-- <p class="help is-success">Nombre de Usuario Correcto</p> -->
 			</div>
@@ -104,8 +100,9 @@
 			      <i class=""></i>
 			    </span>
 			    <span class="icon is-small is-right">
-			      <i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
+			       <span class="icon-location"></span>
 			    </span>
+			   
 			  </div>
 			</div>
 
@@ -120,19 +117,13 @@
 			<div class="field">
 			  <label class="label">Email</label>
 			  <div class="control has-icons-left has-icons-right">
-			    {{form.email(placeholder="Usuario", class="input  is-rounded", id="email")}}
+			    {{form.email(placeholder="Email", class="input  is-rounded", id="email")}}
 			    <span class="icon is-small is-left">
 			      <i class=""></i>
 			    </span>
-			    	<p class="ml-5">
-				    {%if estado==0%}
-
-					{%elif estado==1%}
-						Los emails se escriben en minúscula 
-					{%endif%}
-					</p>
-			    <span class="icon is-small is-right">
-			      <i class="icon_registro_email"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></i>
+			    	
+			     <span class="icon is-small is-right">
+			       <span class="">@</span>
 			    </span>
 			  </div>
 			  <!-- <p class="help is-danger">This email is invalid</p> -->
@@ -154,9 +145,10 @@
 						    <span class="icon is-small is-left">
 						      <i class=""></i>
 						    </span>
-						    <span class="icon is-small is-right">
-						      <i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
-						    </span>
+							<span class="icon is-small is-right">
+			       				<span class="icon-phone"></span>
+			    			</span>
+
 				  		</div>
 				  <!-- <p class="help is-success">Nombre de Usuario Correcto</p> -->
 				  	</div>
@@ -177,8 +169,8 @@
 						<i class=""></i>
 					</span>
 					<span class="icon is-small is-right">
-						<i class="icon_registro_user"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i>
-					</span>
+			       		<span class="icon-mobile"></span>
+			    	</span>
 				</div>
 				<!-- <p class="help is-success">Nombre de Usuario Correcto</p> -->
 				</div>

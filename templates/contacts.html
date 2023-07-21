@@ -28,16 +28,19 @@
     </div>
 
     <div class="content">
-       <p>Teléfono: {%if items.telefono%}
+       <p><span class=" icomoon-nav-ico icon-phone">
+                    {%if items.telefono%}
                     {{items.telefono}}
                     {%else%}
-                    {%endif%}</p>
+                    {%endif%}</span></p>
         
-        <p>Celular: {%if items.celular%}
+        <span class=" icomoon-nav-ico icon-mobile2">   
+
+                    {%if items.celular%}
                     {{items.celular}}
                     {%else%}
-                    {%endif%}</p>
-
+                    {%endif%}</span></p>
+                  
     <footer class="card-footer">
       <a href="{{url_for('registro')}}" class="card-footer-item">Agregar Usuario</a>
       <a href="{{url_for('update', id=items.id)}}"class="card-footer-item">Editar Contacto<i hidden>{{items.id}}</i></a>  

@@ -25,14 +25,44 @@ nav .logo{
 
 nav .list{
 	float: right;
-	padding: 0;
-	margin: 0;
-	width: 60%;
+	padding right: 60px;
+	margin-right: 170px;
+	width: 40%;
 	height: 100%;
 	display: flex;
 	justify-content:space-between;
 	align-items: center;
 }
+
+@media only screen and (min-width: 1024px){ 
+	nav .list{
+		float: right;
+		padding right: 60px;
+		/*margin-right: 1080px;*/
+		margin: auto;
+		width: 60%;
+		height: 100%;
+		display: flex;
+		justify-content:space-between;
+		align-items: center;
+	}
+}
+
+
+@media(max-width: 768px){
+	nav .list{
+		float: right;
+		padding right: 60px;
+		margin: auto;
+		width: 60%;
+		height: 100%;
+		display: flex;
+		justify-content:space-between;
+		align-items: center;
+	}
+}
+
+
 
 nav .list li{
 	list-style: none;
@@ -118,6 +148,10 @@ nav .icon-bars .line{
 	height: 32px;
 }
 
+
+.icomoon-nav-ico{
+	font-size: 30px;
+}
 
 
 

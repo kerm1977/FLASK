@@ -4,11 +4,11 @@
   z-index: 1000; /* sea la capa 1000 y estará por encima de todo los elemtos*/
   border-radius: 30%;
   display: inline-block;
-  height: 40px;
-  width: 40px;
+  height: 55px;
+  width: 55px;
   position: fixed;
-  bottom: 40px;
-  right: 10px;
+  bottom: 20px;
+  right: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   /* image replacement properties */
   overflow: hidden;
@@ -38,7 +38,7 @@
   opacity: .5;
 }
 .no-touch .cd-top:hover {
-  background-color: #e86256;
+  background-color: #d7bde2;
   opacity: 1;
 }
 @media only screen and (min-width: 768px) {

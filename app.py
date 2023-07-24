@@ -7,7 +7,8 @@ from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField, EmailField, IntegerField
 from wtforms.validators import DataRequired, Length, Email,  EqualTo, ValidationError
-
+from datetime import datetime
+from wtforms.widgets import TextArea
 
 app = Flask(__name__)
 import os
@@ -49,11 +50,20 @@ class User(db.Model):
 	confirmpassword		= 	db.Column(db.String(60),	unique=True, 	nullable=False)
 	imagen_perfil		= 	db.Column(db.String(20),	nullable=False, default="default.jpg")
 	date_added			= 	db.Column(db.DateTime,		nullable=False,	default=datetime.utcnow)
-	# posts 				= 	db.relationship("Post", 	backref="author", 	lazy=True)
+	# posts 			= 	db.relationship("Post", 	backref="author", 	lazy=True)
 
 	#Al agregar un campo hay que migrarlo a la DB y también agregarlo en esta fila con la misma sintaxis y orden
 	def __repr__(self):
 		return f"User('{self.username}',{self.apellidos}',{self.apellidos2}','{self.residencia}','{self.email}','{self.telefono}','{self.celular}','{self.password}','{self.confirmpassword}','{self.imagen_perfil}')"
+
+
+class Posts(db.Model):
+	id 					=	db.Column(db.Integer, 		primary_key=True)
+	title 				= 	db.Column(db.String(255))
+	content				=	db.Column(db.Text)
+	author				=	db.Column(db.String(255))
+	date_posted			=	db.Column(db.DateTime, default=datetime.utcnow)
+	slug 				= 	db.Column(db.String(255))
 #**********************************************************************************************
 #**********************************************************************************************
 
@@ -102,6 +112,14 @@ class formularioLogin(FlaskForm):
 	password 			= 	PasswordField	('password', validators=[DataRequired()]) 
 	rememberme 			= 	BooleanField	('checkbox')
 	submit 				= 	SubmitField		('Ingresar')
+
+
+class PostForm(FlaskForm):
+	title = StringField("Title", validators=[DataRequired()])								
+	content = StringField("Content", validators=[DataRequired()], widget=TextArea())
+	author = StringField("Author", validators=[DataRequired()])
+	slug = StringField("Slug", validators=[DataRequired()])
+	submit = SubmitField("Sumbit")
 #**********************************************************************************************
 #**********************************************************************************************
 
@@ -118,15 +136,28 @@ class formularioLogin(FlaskForm):
 @app.route("/")
 @app.route("/home")
 @app.route("/index")
-
 def home():
 	title = "Home"
 	return render_template("index.html", title=title)
 
-@app.route("/dashboard")
-def dashboard():
-	title = "Dashboard"
-	return render_template("dashboard.html", title=title)
+@app.route("/add-post", methods=["GET","POST"])
+def add_post():
+	form = PostForm()
+	if request.method == "POST":
+		post = Posts(title=form.title.data, content=form.content.data, author=form.author.data, slug=form.slug.data)
+		#Limpia el formulario
+		form.title.data = ""
+		form.content.data = ""
+		form.author.data = ""
+		form.slug.data = ""
+
+		#Agregar el formulario a la db
+		db.session.add(post)
+		db.session.commit() 
+
+		flash("Publicado correctamente", "success")
+	return render_template("add_Post.html", form=form)	
+
 
 # LISTA DE CONTACTOS
 @app.route("/contacts")
@@ -274,6 +305,7 @@ if __name__ == "__main__":
 		# flask db init 			<--
 		# $ flask db stamp head
 		# $ flask db migrate
+		# $ flask db migrate -m "mensaje x"
 		# $ flask db upgrade
 #**********************************************************************************************
 #**********************************************************************************************						

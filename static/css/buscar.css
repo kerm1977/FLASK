@@ -38,16 +38,35 @@
 }	
 
 .buscar:hover input{
-	width: 300px;
+	width: 250px;
 	transition: all .4s ease-in-out;
 }
 
 .buscar input:focus{
-	width: 300px;
+	width: 250px;
 }
 
 .btn-buscar{
 	background: none;
 	border: none;
 	font-size: 22px; /*icono*/
+}
+
+
+@media(max-width: 768px){
+
+	.buscar:hover input{
+		width: 350px;
+		transition: all .4s ease-in-out;
+	}
+	
+	.buscar input:focus{
+		width: 350px;
+	}
+
+	.btn-buscar{
+		background: none;
+		border: none;
+		font-size: 22px; /*icono*/
+	}
 }

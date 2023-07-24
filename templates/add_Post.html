@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %} 
+
+title
+content
+author
+slug
+
+
+<div class="container posts mt5">
+	<div class="column">
+		<form action="" method="POST">
+			{{ form.hidden_tag() }}
+
+			{{ form.title.label(class="label") }}
+			{{ form.title(class="input is-normal is-rounded") }}
+
+			{{ form.content.label(class="label") }}
+			{{ form.content(class="input is-normal", rows="10") }}
+
+			{{ form.author.label(class="label") }}
+			{{ form.author(class="input is-normal is-rounded") }}
+
+			{{ form.slug.label(class="label") }}
+			{{ form.slug(class="input is-normal is-rounded") }}
+
+			{{ form.submit(class="button is-success is-ligh mt-5")}}
+
+		</form>
+	</div>
+</div>
+
+{% endblock %}

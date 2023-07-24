@@ -1,0 +1,33 @@
+<nav>
+
+<!-- barra de busqueda -->
+    <form action="" methods="POST"]>
+        <div class="search">
+            <div class="buscar">
+                <input class="" type="text" placeholder="Buscar" name="buscar" id="inputSearch" required>
+                <div class="btn-ico">
+                    <button type="submit" value="buscar" class="btn-buscar">
+                        <span class="icon-search"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+<!-- fin barra de busqueda -->
+
+    <input type="checkbox" id="toogle">
+     
+    <ul class="list">
+        <li><a href="{{url_for('home')}}">Inicio</a></li>
+        <li><a href="">Nosotros</a></li>
+        <li><a href="{{url_for('add_post')}}">Blog</a></li>
+        <li><a href="{{url_for('registro')}}"><i class=" icomoon-nav-ico icon-home2"></i></a></li>
+        <a href="{{url_for('contacts')}}"><li><span class=" icomoon-nav-ico fas fa-solid fa-address-book"></span></li></a>
+    </ul>
+
+    <label for="toogle" class="icon-bars">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </label>
+</nav>

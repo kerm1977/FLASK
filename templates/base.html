@@ -15,55 +15,9 @@
 </head>
 
 <body>
-    
-<nav>
-    <form action="" methods="post"]>
-        <div class="search">
-            <div class="buscar">
-                <input class="" type="text" placeholder="Buscar" required>
-                <div class="btn-ico">
-
-                    <button type="submit" value="buscar" class="btn-buscar">
-                        <span class="icon-search"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <input type="checkbox" id="toogle">
-     
-    <ul class="list">
-        <li><a href="{{url_for('home')}}">Inicio</a></li>
-        <li><a href="">Nosotros</a></li>
-        <li><a href="">Blog</a></li>
-        <li><a href="{{url_for('registro')}}"><i class=" icomoon-nav-ico icon-home2"></i></a></li>
-        <a href="{{url_for('contacts')}}"><li><span class=" icomoon-nav-ico fas fa-solid fa-address-book"></span></li></a>
-        
-    </ul>
-
-    <label for="toogle" class="icon-bars">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </label>
-</nav>
-
-<div class="hideMe">
-    <div class="container container-messages alert_messages ">
-        <!-- Estos son mensajes flashed que vienen desde main.py -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {%if messages %}
-                    {%for category, message in messages%}
-                        <div class="notification notifications is-{{ category }}">
-                            {{ message }}
-                        </div>  
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-    </div>  
-</div>
-
+ 
+    {% include 'navbar.html' %}    
+    {% include 'flash.html' %} 
 
 <!-- CONTENIDO DE HERENCIA -->
 
@@ -85,10 +39,6 @@
         </div>
         </div>
     </div>
-
-
-
-
 
 <!-- boton de refresh trabaja con refresh.css no borrar -->
     <div class="container">
@@ -121,7 +71,7 @@
 
 
 
-
+<script src="{{ url_for('static', filename='js/buscador.js') }}"></script>
 <script src="{{ url_for('static', filename='js/deleteUsers.js') }}"></script>
  
 

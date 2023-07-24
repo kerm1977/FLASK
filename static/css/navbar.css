@@ -7,7 +7,8 @@ nav{
 	font-family: Arial, Helvetica, sans-serif;
 	padding: 0 5%;
 	height: 100px;
-	background-color: #31475e; /*Color de fondo*/
+	background-color:  #f48fb1 ; 
+	/*Color de fondo*/
 }
 
 nav .logo{
@@ -63,10 +64,10 @@ nav .list{
 }
 
 
-
 nav .list li{
 	list-style: none;
 }
+
 
 nav .list a{
 	display: block;
@@ -80,7 +81,7 @@ nav .list a{
 }
 
 nav .list a:hover{
-	background-color: #0ba89c;
+	background-color:  #f8bbd0 ;
 }
 
 #toogle {
@@ -124,10 +125,15 @@ nav .icon-bars .line{
 		height: auto;
 		flex-direction: column;
 		justify-content: space-evenly;
-		background-color: #2a3b51;
+		background-color:  #f8bbd0 ;
 		overflow: hidden;
 		transition: all .2s ease-in-out; /*Velocidad como se depliega el menu*/
 	}
+
+	nav .list a:hover{
+	background-color:   #f06292;
+;
+}
 
 	nav .list a{
 		font-size: 20px;

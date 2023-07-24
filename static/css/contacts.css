@@ -2,8 +2,13 @@
 	font-family: Arial, "Lucida Grande";
 	}
 
+.card{
+	margin: 20px;
+	}
+
 .contacts{
 	margin-top: 300px;
+	font-family: Arial, "Lucida Grande";
 	}
 
 .contacts-table{
@@ -16,9 +21,9 @@
 
 .table-head{
 	font-size: 14px;
-}
+	}
 
 
 .container-update{
 	margin-top: 200px;
-}
+	}

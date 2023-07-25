@@ -56,7 +56,6 @@ class User(db.Model):
 	def __repr__(self):
 		return f"User('{self.username}',{self.apellidos}',{self.apellidos2}','{self.residencia}','{self.email}','{self.telefono}','{self.celular}','{self.password}','{self.confirmpassword}','{self.imagen_perfil}')"
 
-
 class Posts(db.Model):
 	id 					=	db.Column(db.Integer, 		primary_key=True)
 	title 				= 	db.Column(db.String(255))
@@ -105,14 +104,12 @@ class formularioRegistro(FlaskForm):
 			#Advierte que el Email ya fue tomado.
 			flash("El email ya fue tomado. Use otro ")
 
-
 class formularioLogin(FlaskForm):
  # CAMPOS EN DB			   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES
 	email 				= 	StringField		('email', validators=[DataRequired(), Email()])
 	password 			= 	PasswordField	('password', validators=[DataRequired()]) 
 	rememberme 			= 	BooleanField	('checkbox')
 	submit 				= 	SubmitField		('Ingresar')
-
 
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[DataRequired()])								
@@ -140,6 +137,14 @@ def home():
 	title = "Home"
 	return render_template("index.html", title=title)
 
+
+# VISUALIZAR POSTS
+@app.route("/post")
+def post():
+	post = Posts.query.order_by(Posts.date_posted)
+	return render_template("post.html", post=post)
+
+# CREAR POSTS
 @app.route("/add-post", methods=["GET","POST"])
 def add_post():
 	form = PostForm()
@@ -157,7 +162,6 @@ def add_post():
 
 		flash("Publicado correctamente", "success")
 	return render_template("add_Post.html", form=form)	
-
 
 # LISTA DE CONTACTOS
 @app.route("/contacts")
@@ -268,6 +272,7 @@ def delete(id):
 	else:
 		return render_template("contacts.html")
 	
+
 
 # ALERTA DE ERRORES
 # Error URL Invalida

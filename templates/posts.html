@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container container-post">
+	
+	<div class="container">
+	<a class="level-item" aria-label="">
+	   <a href="{{url_for('post', id=post.id)}}">
+		    <i class="" aria-hidden="true">Regresar</i>
+	   </a>
+	</a>
+	</div>
+	<div class="">
+	  <article class="media">
+	    <div class="media-left">
+	      <figure class="image is-64x64">
+	        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+	      </figure>
+	    </div>
+	    <div class="media-content">
+	      <div class="content">
+	      	{{post.title}}
+	        <p>
+	          <strong>{{post.author}}</strong> <small>{{post.slug}}</small> <small>31m</small>
+	          <br>
+	        {{post.description}}
+	        </p>
+	      <br>{{post.date_posted}}<br>
+	      </div>
+	    </div>
+	  </article>
+	</div>
+
+	{{post.title}}
+	<p>{{post.content}}</p>
+	
+	{{post.date_posted}}
+	
+
+	<a class="level-item" aria-label="">
+	    <a href="{{url_for('post', id=post.id)}}">
+		    <i class="" aria-hidden="true">Regresar</i>
+	    </a>
+	</a>
+</div>
+
+{% endblock %}

@@ -1,3 +1,7 @@
+#IMPORTS ----------------
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 from flask import Flask
 from datetime import datetime
 from flask import request, make_response, redirect, render_template, url_for, flash
@@ -9,7 +13,19 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Hidde
 from wtforms.validators import DataRequired, Length, Email,  EqualTo, ValidationError
 from datetime import datetime
 from wtforms.widgets import TextArea
+# -----------------------
 
+
+
+
+
+
+
+
+# SQLITE3 DB ------------
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 app = Flask(__name__)
 import os
 #Ruta de la DB
@@ -21,11 +37,11 @@ app.app_context().push()
 migrate = Migrate(app,db,render_as_batch=True)
 bcrypt 	= Bcrypt(app)
 
-
 pw_hash = bcrypt.generate_password_hash("SECRET_KEY")
 bcrypt.check_password_hash(pw_hash, "SECRET_KEY")
 app.config['SECRET_KEY'] = pw_hash
 # print(pw_hash)
+# -----------------------
 
 
 
@@ -34,8 +50,10 @@ app.config['SECRET_KEY'] = pw_hash
 
 
 
-#MODELOS  *************************************************************************************
-#**********************************************************************************************
+#TABLAS -----------------
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 class User(db.Model):
 	#Al agregar un campo hay que migrarlo a la DB y aquí se crean los campos del usuario
 	id 					=	db.Column(db.Integer, 		primary_key=True)
@@ -59,12 +77,12 @@ class User(db.Model):
 class Posts(db.Model):
 	id 					=	db.Column(db.Integer, 		primary_key=True)
 	title 				= 	db.Column(db.String(255))
+	description			=	db.Column(db.Text)
 	content				=	db.Column(db.Text)
 	author				=	db.Column(db.String(255))
 	date_posted			=	db.Column(db.DateTime, default=datetime.utcnow)
 	slug 				= 	db.Column(db.String(255))
-#**********************************************************************************************
-#**********************************************************************************************
+# -----------------------
 
 
 
@@ -73,8 +91,10 @@ class Posts(db.Model):
 
 
 
-#FORMULARIO TABLAS LOGIN Y DE REGISTRO ********************************************************
-#**********************************************************************************************
+# MODELOS FORMULARIO TABLAS LOGIN Y DE REGISTRO 
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 class formularioRegistro(FlaskForm):
 
 	# Para agregar un campo a la DB se agrega dentro de este formulario, también 
@@ -112,13 +132,13 @@ class formularioLogin(FlaskForm):
 	submit 				= 	SubmitField		('Ingresar')
 
 class PostForm(FlaskForm):
-	title = StringField("Title", validators=[DataRequired()])								
-	content = StringField("Content", validators=[DataRequired()], widget=TextArea())
-	author = StringField("Author", validators=[DataRequired()])
-	slug = StringField("Slug", validators=[DataRequired()])
-	submit = SubmitField("Sumbit")
-#**********************************************************************************************
-#**********************************************************************************************
+	title = StringField("Titulo", validators=[DataRequired()])
+	description = StringField("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
+	content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
+	author = StringField("Autor", validators=[DataRequired()])
+	slug = StringField("Detalle", validators=[DataRequired()])
+	submit = SubmitField("Crear")
+# -----------------------
 
 
 
@@ -127,9 +147,10 @@ class PostForm(FlaskForm):
 
 
 
-#VIEWS  ***************************************************************************************
-#**********************************************************************************************
-
+#VIEWS ------------------
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 @app.route("/")
 @app.route("/home")
 @app.route("/index")
@@ -138,23 +159,24 @@ def home():
 	return render_template("index.html", title=title)
 
 
-# VISUALIZAR POSTS
-@app.route("/post")
-def post():
-	post = Posts.query.order_by(Posts.date_posted)
-	return render_template("post.html", post=post)
-
 # CREAR POSTS
 @app.route("/add-post", methods=["GET","POST"])
 def add_post():
-	form = PostForm()
+	form = PostForm() #PostForm es la clase modelo creada en la parte superior 
 	if request.method == "POST":
-		post = Posts(title=form.title.data, content=form.content.data, author=form.author.data, slug=form.slug.data)
+		post = Posts(
+			title			=		form.title.data, 
+			description		=		form.description.data, 
+			content			=		form.content.data, 
+			author			=		form.author.data, 
+			slug			=		form.slug.data)
+
 		#Limpia el formulario
-		form.title.data = ""
-		form.content.data = ""
-		form.author.data = ""
-		form.slug.data = ""
+		form.title.data 	= 		""
+		form.description.data = 	""
+		form.content.data 	= 		""
+		form.author.data 	= 		""
+		form.slug.data 		= 		""
 
 		#Agregar el formulario a la db
 		db.session.add(post)
@@ -163,13 +185,61 @@ def add_post():
 		flash("Publicado correctamente", "success")
 	return render_template("add_Post.html", form=form)	
 
-# LISTA DE CONTACTOS
-@app.route("/contacts")
-def contacts():
-	values=User.query.all()
-	users= len(values)
-	titulo = "Inicio"
-	return render_template("contacts.html", vtitulo=titulo, values=values, users=users)
+# EDITAR POSTS
+@app.route("/posts/edit/<int:id>", methods=["GET","POST"])
+def edit_post(id):
+	post = Posts.query.get_or_404(id)
+	form = PostForm() #PostForm es la clase modelo creada en la parte superior 
+	if request.method == "POST":
+		post.title			=		form.title.data 
+		post.description	=		form.description.data
+		post.content		=		form.content.data 
+		post.author			=		form.author.data
+		post.slug			=		form.slug.data
+		#Actualizar la base de datos
+		db.session.add(post)
+		db.session.commit()
+		flash("El post ha sido modificado")
+		return redirect(url_for('post', id=post.id))
+	
+	form.title.data			= 		post.title
+	form.description.data 	= 		post.description
+	form.content.data 		= 		post.content
+	form.author.data 		= 		post.author
+	form.slug.data 			= 		post.slug
+	return render_template("edit_post.html", form=form)
+
+# BORRAR POSTS
+@app.route("/posts/delete/<int:id>")
+def delete_post(id):
+	borrar_post = Posts.query.get_or_404(id)
+
+	try:
+		db.session.delete(borrar_post)
+		db.session.commit()
+		flash(f"El Post fué Eliminado", "success")
+		return redirect(url_for("post"))
+		return render_template("post.html", borrar_post = borrar_post)
+	except:
+		db.session.commit()
+		flash("Hubo un error al intentar borrar este Post", "danger")
+		return render_template("post.html", borrar_registro=borrar_registro, id_delete=id_delete)
+	else:
+		return render_template("post.html")
+
+			
+# VISUALIZAR POSTS
+@app.route("/post")
+def post():
+	post = Posts.query.order_by(Posts.date_posted)
+	return render_template("post.html", post=post)
+
+# LEER POST INDIVIDUALMENTE
+@app.route("/posts/<int:id>")
+def posts(id):
+	post = Posts.query.get_or_404(id)
+	return render_template("posts.html", post=post)
+
 
 # FORMULARIO DE LOGIN
 @app.route("/login", methods=["GET","POST"]) 
@@ -225,6 +295,15 @@ def registro():
 			return redirect(url_for("login"))
 	return render_template("registro.html", vtitulo=titulo, form=form)
 
+
+# LISTA DE CONTACTOS
+@app.route("/contacts")
+def contacts():
+	values=User.query.all()
+	users= len(values)
+	titulo = "Inicio"
+	return render_template("contacts.html", vtitulo=titulo, values=values, users=users)
+
 # ACTUALIZAR CONTACTOS
 @app.route("/update/<int:id>", methods=["GET","POST"])
 def update(id):
@@ -272,8 +351,7 @@ def delete(id):
 	else:
 		return render_template("contacts.html")
 	
-
-
+#_______________________
 # ALERTA DE ERRORES
 # Error URL Invalida
 @app.errorhandler(404)
@@ -286,9 +364,7 @@ def pagina_no_encontrada(e):
 def Error_Server(e):
 	titulo = "500"
 	return render_template("500.html", vtitulo=titulo), 500
-
-#**********************************************************************************************
-#**********************************************************************************************
+# -----------------------
 
 
 
@@ -297,8 +373,10 @@ def Error_Server(e):
 
 
 
-#RUN*******************************************************************************************
-#**********************************************************************************************
+#RUN --------------------
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
 if __name__ == "__main__":
 	db.create_all()
 	# db.upgrade_all()
@@ -312,5 +390,4 @@ if __name__ == "__main__":
 		# $ flask db migrate
 		# $ flask db migrate -m "mensaje x"
 		# $ flask db upgrade
-#**********************************************************************************************
-#**********************************************************************************************						
+# -----------------------

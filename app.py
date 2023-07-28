@@ -13,6 +13,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Hidde
 from wtforms.validators import DataRequired, Length, Email,  EqualTo, ValidationError
 from datetime import datetime
 from wtforms.widgets import TextArea
+from  flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 # -----------------------
 
 
@@ -50,11 +51,30 @@ app.config['SECRET_KEY'] = pw_hash
 
 
 
+# MANEJO DE SESIONES ----
+# -----------------------
+# /::::::::::::::::::::/
+# -----------------------
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login" # 
+login_manager.login_message = u" Primero Necesitas Iniciar sesión"
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
+
+
+
+
+
+
+
+
 #TABLAS -----------------
 # -----------------------
 # /::::::::::::::::::::/
 # -----------------------
-class User(db.Model):
+class User(db.Model, UserMixin):
 	#Al agregar un campo hay que migrarlo a la DB y aquí se crean los campos del usuario
 	id 					=	db.Column(db.Integer, 		primary_key=True)
 	username 			= 	db.Column(db.String(20),	unique=False, 	nullable=False)
@@ -158,6 +178,21 @@ def home():
 	title = "Home"
 	return render_template("index.html", title=title)
 
+# LOGOUT
+@app.route("/logout")
+@login_required
+def logout():
+   	logout_user()
+   	flash("Sesión finalizada","warning")
+   	return redirect(url_for("login"))
+   	
+
+# DASHBOARD
+@app.route("/dashboard", methods=["GET","POST"])
+@login_required
+def dashboard():
+	title = "Configuración"
+	return render_template("dashboard.html", title=title)
 
 # CREAR POSTS
 @app.route("/add-post", methods=["GET","POST"])
@@ -226,7 +261,6 @@ def delete_post(id):
 		return render_template("post.html", borrar_registro=borrar_registro, id_delete=id_delete)
 	else:
 		return render_template("post.html")
-
 			
 # VISUALIZAR POSTS
 @app.route("/post")
@@ -240,23 +274,21 @@ def posts(id):
 	post = Posts.query.get_or_404(id)
 	return render_template("posts.html", post=post)
 
-
-# FORMULARIO DE LOGIN
+# LOGIN
 @app.route("/login", methods=["GET","POST"]) 
 def login():
 	titulo="Login"
 	form = formularioLogin()
-
-
 	if request.method == "POST":
 		user = User.query.filter_by(email=form.email.data.lower()).first()
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user)
 			flash(f"Hola {user.username.upper()}", "alert-primary")
-			return redirect("home")
+			return redirect("dashboard")
 		flash("Contraseña o Usuario invalidos", "danger")
 	return render_template("login.html", vtitulo=titulo, form=form)
 
-# FORMULARIO DE REGISTRO
+# REGISTRO
 @app.route("/registro", methods=["GET","POST"]) 
 def registro():
 	titulo="Registro"
@@ -294,7 +326,6 @@ def registro():
 			flash(f"Cuenta creada por {form.username.data.upper()} {form.apellidos.data.upper()}", "success")
 			return redirect(url_for("login"))
 	return render_template("registro.html", vtitulo=titulo, form=form)
-
 
 # LISTA DE CONTACTOS
 @app.route("/contacts")
@@ -342,14 +373,14 @@ def delete(id):
 		db.session.delete(borrar_registro)
 		db.session.commit()
 		flash(f"El usuario fué Eliminado", "warning")
-		return redirect(url_for("contacts"))
-		return render_template("contacts.html", borrar_registro = borrar_registro)
+		return redirect(url_for("delete_contacts"))
+		return render_template("delete_contacts.html", borrar_registro = borrar_registro)
 	except:
 		db.session.commit()
 		flash("Hubo un error al intentar borrar este registro", "danger")
-		return render_template("contacts.html", borrar_registro=borrar_registro, id_delete=id_delete)
+		return render_template("delete_contacts.html", borrar_registro=borrar_registro, id_delete=id_delete)
 	else:
-		return render_template("contacts.html")
+		return render_template("delete_contacts.html")
 	
 #_______________________
 # ALERTA DE ERRORES

@@ -1,45 +1,54 @@
 {% extends "base.html" %}
 {% block content %} 
 
-<div class="container-fluid dashboard">
-	<div class="row flex-nowrap">
-		<div class="bg-dark col-auto col-md-4 col-lg-4 col-xl-3 min-vh-100">	
-			<div class="bg-dark icon-dash-profile">
+<div class="container dashboard">
+	<aside class="menu">
+	  <p class="menu-label">
+	    Configuración General
+	  </p>
+	  {% if current_user.is_authenticated %}
+  		Hola {{ current_user.username }}!
+	   {% endif %}
 
-				<a class="text-decoration-none text-white">
-					<span class="icon-dash d-none d-sm-inline icon-home3"></span><span class="fs-4 d-none d-sm-inline">DASHBOARD</span></a>
+	<hr>	
+	  <ul class="menu-list">
+	    <li>
+	      <a class="has-background-danger-light"><span class=" icomoon-dash-ico fas fa-solid fa-address-book"></span>Administrador de Usuarios</a>
+	      <ul>
+	        <li><a href="{{url_for('registro')}}"><span class="icomoon-dash-ico icon-user-plus"></span> Agregar usuarios</a></li>
+	        <li><a href="{{url_for('contacts')}}"><span class="icomoon-dash-ico icon-profile"></span>	Borrar y editar usuarios</a></li>
+	      </ul>
+	    </li>
+	  </ul>
 
+	  <br>
 
-				<ul class="nav nav-pills flex-column mt-5">
-					<li class="nav-item ">
-						<a href="#" class="nav-link" aria-current="page"><span class=" icon-dash icon-profile"></span> <span class="fs-4 d-none d-sm-inline">Perfil</span></a>
-					</li>
-
-					<li class="nav-item ">
-						<a href="#" class="nav-link" aria-current="page"><span class=" icon-dash icon-home3"></span> <span class="fs-4 d-none d-sm-inline">Contactos</span></a>
-					</li>
-
-					<li class="nav-item ">
-						<a href="#" class="nav-link" aria-current="page"><span class=" icon-dash icon-home3"></span> <span class="fs-4 d-none d-sm-inline">Otro</span></a>
-					</li>
-
-					<li class="nav-item ">
-						<a href="#" class="nav-link" aria-current="page"><span class=" icon-dash icon-home3"></span> <span class="fs-4 d-none d-sm-inline">Otro-1</span></a>
-					</li>
-
-					<li class="nav-item ">
-						<a href="#" class="nav-link" aria-current="page"><span class=" icon-dash icon-home3"></span> <span class="fs-4 d-none d-sm-inline">Otro-2</span></a>
-					</li>
-
-				</ul>
-
-			</div>
-		</div>
-	</div>
+	  <ul class="menu-list">
+	    <!-- <li><a>Team Settings</a></li> -->
+	    <li>
+	      <a class="has-background-danger-light"><span class=" icomoon-dash-ico icon-quill"></span>Administrador de Posts</a>
+	      <ul>
+	        <li><a href="{{url_for('add_post')}}"><span class="icomoon-dash-ico icon-pencil"></span> Crear Posts</a></li>
+	        <li><a href="{{url_for('post')}}"><span class="icomoon-dash-ico icon-bin"></span>Borrar y editar Posts</a></li>
+	      </ul>
+	    </li>
+	    <li><a>Invitations</a></li>
+	    <li><a>Cloud Storage Environment Settings</a></li>
+	    <li><a>Authentication</a></li>
+	  </ul>
+	  <p class="menu-label">
+	    Transactions
+	  </p>
+	  <ul class="menu-list">
+	    <li><a>Payments</a></li>
+	    <li><a>Transfers</a></li>
+	    <li><a>Balance</a></li>
+	    <li><a>Invitations</a></li>
+	    <li><a>Cloud Storage Environment Settings</a></li>
+	    <hr>
+	    <li><a href="{{url_for('logout')}}"><span class="icomoon-dash-ico icon-switch"></span><strong>Cerrar Sesion</strong></a></li>
+	  </ul>
+	</aside>
 </div>
-
-
-
-
 
 {% endblock %}

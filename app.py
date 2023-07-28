@@ -58,7 +58,7 @@ app.config['SECRET_KEY'] = pw_hash
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login" # 
-login_manager.login_message = u" Primero Necesitas Iniciar sesión"
+login_manager.login_message = u"Primero necesitas iniciar sesión"
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
@@ -180,7 +180,7 @@ def home():
 
 # LOGOUT
 @app.route("/logout")
-@login_required
+@login_required #Solo se puede editar con login
 def logout():
    	logout_user()
    	flash("Sesión finalizada","warning")
@@ -189,13 +189,14 @@ def logout():
 
 # DASHBOARD
 @app.route("/dashboard", methods=["GET","POST"])
-@login_required
+@login_required #Solo se puede editar con login
 def dashboard():
 	title = "Configuración"
 	return render_template("dashboard.html", title=title)
 
 # CREAR POSTS
 @app.route("/add-post", methods=["GET","POST"])
+@login_required #Solo se puede editar con login
 def add_post():
 	form = PostForm() #PostForm es la clase modelo creada en la parte superior 
 	if request.method == "POST":
@@ -218,10 +219,12 @@ def add_post():
 		db.session.commit() 
 
 		flash("Publicado correctamente", "success")
+		return redirect("post")
 	return render_template("add_Post.html", form=form)	
 
 # EDITAR POSTS
 @app.route("/posts/edit/<int:id>", methods=["GET","POST"])
+@login_required #Solo se puede editar con login
 def edit_post(id):
 	post = Posts.query.get_or_404(id)
 	form = PostForm() #PostForm es la clase modelo creada en la parte superior 
@@ -246,6 +249,7 @@ def edit_post(id):
 
 # BORRAR POSTS
 @app.route("/posts/delete/<int:id>")
+@login_required #Solo se puede editar con login
 def delete_post(id):
 	borrar_post = Posts.query.get_or_404(id)
 
@@ -264,12 +268,14 @@ def delete_post(id):
 			
 # VISUALIZAR POSTS
 @app.route("/post")
+@login_required #Solo se puede editar con login
 def post():
 	post = Posts.query.order_by(Posts.date_posted)
 	return render_template("post.html", post=post)
 
 # LEER POST INDIVIDUALMENTE
 @app.route("/posts/<int:id>")
+@login_required #Solo se puede editar con login
 def posts(id):
 	post = Posts.query.get_or_404(id)
 	return render_template("posts.html", post=post)
@@ -329,6 +335,7 @@ def registro():
 
 # LISTA DE CONTACTOS
 @app.route("/contacts")
+@login_required #Solo se puede editar con login
 def contacts():
 	values=User.query.all()
 	users= len(values)
@@ -337,13 +344,13 @@ def contacts():
 
 # ACTUALIZAR CONTACTOS
 @app.route("/update/<int:id>", methods=["GET","POST"])
+@login_required #Solo se puede editar con login
 def update(id):
 	form = formularioRegistro()
 	values=User.query.all()
 	users= len(values)
 	actualizar_registro = User.query.get_or_404(id)
 	if request.method == "POST":
-		
 		actualizar_registro.username = request.form["username"]
 		actualizar_registro.apellidos = request.form["apellidos"]
 		actualizar_registro.apellidos2 = request.form["apellidos2"]
@@ -365,6 +372,7 @@ def update(id):
 
 # BORRAR CONTACTOS
 @app.route("/delete/<int:id>")
+@login_required
 def delete(id):
 	id_delete=id
 	borrar_registro = User.query.get_or_404(id)
@@ -373,14 +381,14 @@ def delete(id):
 		db.session.delete(borrar_registro)
 		db.session.commit()
 		flash(f"El usuario fué Eliminado", "warning")
-		return redirect(url_for("delete_contacts"))
-		return render_template("delete_contacts.html", borrar_registro = borrar_registro)
+		return redirect(url_for("contacts"))
+		return render_template("contacts.html", borrar_registro = borrar_registro)
 	except:
 		db.session.commit()
 		flash("Hubo un error al intentar borrar este registro", "danger")
-		return render_template("delete_contacts.html", borrar_registro=borrar_registro, id_delete=id_delete)
+		return render_template("delete.html", borrar_registro=borrar_registro, id_delete=id_delete)
 	else:
-		return render_template("delete_contacts.html")
+		return render_template("delete.html")
 	
 #_______________________
 # ALERTA DE ERRORES

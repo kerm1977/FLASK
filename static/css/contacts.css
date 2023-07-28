@@ -6,8 +6,12 @@
 	margin: 20px;
 	}
 
+.content{
+	color: black
+}
+
 .contacts{
-	margin-top: 300px;
+	/*margin-top: 300px;*/
 	font-family: Arial, "Lucida Grande";
 	}
 
@@ -27,3 +31,7 @@
 .container-update{
 	margin-top: 200px;
 	}
+
+.icomoon-contacts-ico{
+	color: grey
+}

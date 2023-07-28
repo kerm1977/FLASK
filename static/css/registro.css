@@ -1,16 +1,16 @@
-.frame{
-	width: 600px;
-	height:auto;
-	padding: 50px 30px 50px 30px;
-	margin: auto;
-	margin-top: 200px;
-	background-color: #eaeaea;
-	border-radius: 20px;
-	color: white;
-	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-	font-family: font-family: Arial, "Lucida Grande";
-	}
 
+.container-registro{
+	display: flex;
+	justify-content: center;
+	margin: auto;
+}
+
+
+.margin_main{
+		width: 500px;
+		height: 80%;
+		margin: 300px 30px 0px 30px;
+}
 @media(max-width: 768px){
 	.frame{
 		padding: 20px;

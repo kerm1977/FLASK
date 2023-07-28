@@ -296,6 +296,7 @@ def login():
 
 # REGISTRO
 @app.route("/registro", methods=["GET","POST"]) 
+
 def registro():
 	titulo="Registro"
 	form = formularioRegistro()

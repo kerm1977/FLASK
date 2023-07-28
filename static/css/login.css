@@ -1,0 +1,18 @@
+
+.container-login{
+	display: flex;
+	justify-content: center;
+	margin: auto;
+}
+
+.margin_main{
+		width: 500px;
+		margin: 100px 30px 0px 30px;
+}
+
+
+@media(max-width: 768px){
+	.margin_main{
+		margin: 100px 30px 0px 30px;
+	}
+}

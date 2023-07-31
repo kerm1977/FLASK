@@ -1,39 +1,15 @@
-
 .container-registro{
 	display: flex;
 	justify-content: center;
-	margin: auto;
-}
 
-
-.margin_main{
-		width: 500px;
-		height: 80%;
-		margin: 300px 30px 0px 30px;
 }
-@media(max-width: 768px){
-	.frame{
-		padding: 20px;
-		width: auto;
-		margin: 20px 20px 100px 20px;
-	}
-}
-
-.formularioRegistro{
-	margin-top: 200px;
-	font-family: font-family: Arial, "Lucida Grande";
-	}
 
 .label{
 	margin-left: 20px;
 	color: #fcb7af;
 }
 
-.alert_messages{
-	width: 400px;
-	margin-bottom: -200px;
-	padding-top: 120px;	
-	}
+
 
 @media(max-width: 768px){
 	.alert_messages{
@@ -41,7 +17,6 @@
 		margin-bottom: -20px;	
 	}
 }
-
 
 .link_register{
 	color: #fa34df;
@@ -56,13 +31,6 @@
 	overflow: hidden;
 	}
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
@@ -71,4 +39,7 @@ input[type=number] {
 
 .button-form{
 	font-family: font-family: Arial, "Lucida Grande" i !important;
+	display: flex;
+	justify-content: center;
+
 }

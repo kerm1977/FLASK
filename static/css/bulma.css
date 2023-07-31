@@ -4552,7 +4552,7 @@ fieldset[disabled] .select select:hover {
 .control.has-icons-left .icon, .control.has-icons-right .icon {
   color: #dbdbdb;
   height: 2.5em;
-  pointer-events: none;
+  /*pointer-events: none;*/
   position: absolute;
   top: 0;
   width: 2.5em;

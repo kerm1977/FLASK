@@ -1,16 +1,18 @@
 <!-- MENSAJES FLASK -->
     
 <div class="container">
-    <div class="hide">
-<!-- Estos son mensajes flashed que vienen desde main.py -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {%if messages %}
-                {%for category, message in messages%}
-                    <div class="notification notifications is-{{ category }}">
-                        {{ message }}
-                    </div>  
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <div class="container-flash">
+        <div class="hide">
+    <!-- Estos son mensajes flashed que vienen desde main.py -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {%if messages %}
+                    {%for category, message in messages%}
+                        <div class="notification notifications is-{{ category }}">
+                            {{ message }}
+                        </div>  
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
     </div>
 </div>

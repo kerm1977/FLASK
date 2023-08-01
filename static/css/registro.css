@@ -27,9 +27,17 @@
 	}
 
 .input{
-	font-family: Arial, "Lucida Grande" !important;
+	font-family: Arial !important;
 	overflow: hidden;
+	font-size: 20px;
 	}
+
+input-reg{
+	font-family: Arial !important;
+	overflow: hidden;
+	font-size: 20px;
+}
+
 
 /* Firefox */
 input[type=number] {
@@ -41,5 +49,5 @@ input[type=number] {
 	font-family: font-family: Arial, "Lucida Grande" i !important;
 	display: flex;
 	justify-content: center;
-
 }
+

@@ -1,9 +1,11 @@
 .search{
-	margin-top: -210px;
+	margin-top: -245px;
 	margin-left: 20px;
-	z-index: 1000;
+	z-index: 1000000;
 	position:fixed;
+	box-shadow: 10 10 10 10;
 }
+
 
 .buscar{
 	position: absolute;

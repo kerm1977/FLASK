@@ -47,7 +47,7 @@
   content: "\e906";
 }
 .icon-quill:before {
-  content: "\e907";
+  content: "\e907
 }
 .icon-pen:before {
   content: "\e908";
@@ -642,6 +642,9 @@
 }
 .icon-attachment:before {
   content: "\e9cd";
+}
+.icon-eye:before {
+  content: "\e9ce";
 }
 .icon-eye:before {
   content: "\e9ce";

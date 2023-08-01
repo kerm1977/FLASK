@@ -174,11 +174,9 @@
 			<div class="field">
 			  <label class="label">Password</label>
 			  <div class="control has-icons-left has-icons-right">
-			    {{form.password(placeholder="Password", class="input  is-rounded", id="password" )}}
-			    <span class="icon is-small is-left">
-			      <i class=""></i>
-			    </span>
-			    <span class="icon is-small is-right icon-eye"></span>
+			    {{form.password(placeholder="Password", class="input input-reg is-rounded", id="password", type="password" )}}
+			  
+			    <i class="bx icon is-small is-right icon-eye" onclick="myFunction()"></i> 
 			  </div>
 			  <!-- <p class="help is-danger">This email is invalid</p> -->
 			</div>
@@ -194,8 +192,8 @@
 			<div class="field">
 			  <label class="label">Confirmar Password</label>
 			  <div class="control has-icons-left has-icons-right">
-			    {{form.confirmpassword(placeholder="Confirmar Password", class="input  is-rounded", id="confirmpassword", for="confirmpassword" )}}
-			    <span class="icon is-small is-right icon-eye"></span>
+			  	{{form.confirmpassword(placeholder="Confirmar Password", class="input input-reg is-rounded", id="confirmpassword", type="password" )}}
+			    <i class="bx icon is-small is-right icon-eye" onclick="myFunction2()"></i>
 			  </div>
 			  <!-- <p class="help is-danger">This email is invalid</p> -->
 			</div>

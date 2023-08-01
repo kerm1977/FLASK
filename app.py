@@ -133,7 +133,7 @@ class formularioRegistro(FlaskForm):
 	telefono			= 	IntegerField	('telefono', validators=[Length(min=8, max=15)])
 	celular				= 	IntegerField	('celular', validators=[Length(min=8, max=15)])
 	password 			= 	PasswordField	('password',validators=[DataRequired(), Length(min=8, max=20)]) 
-	confirmpassword 	= 	PasswordField	('confirmpassword',validators=[DataRequired(), EqualTo('password', message='Password No Coincide')], id="confirm")
+	confirmpassword 	= 	PasswordField	('confirmpassword',validators=[DataRequired(), EqualTo('password', message='Password No Coincide')], id="confirmpassword")
 	submit 				= 	SubmitField		('Registrarme')
 
 	def validate_email(self, email):
@@ -296,7 +296,6 @@ def login():
 
 # REGISTRO
 @app.route("/registro", methods=["GET","POST"]) 
-
 def registro():
 	titulo="Registro"
 	form = formularioRegistro()
@@ -324,7 +323,7 @@ def registro():
 				telefono			=		form.telefono.data,
 				celular				=		form.celular.data,
 				password 			=		hashed_password, 
-				confirmpassword 	=		hashed_password
+				confirmpassword 	=		hashed_password,
 				#  nombre			= 			campo
 				)
 
@@ -363,7 +362,7 @@ def update(id):
 		try:
 			db.session.commit()
 			flash(f"{form.username.data.title()} {form.apellidos.data.title()} {form.apellidos2.data.title()} ha sido modificad@", "success")
-			return render_template("contacts.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
+			return render_template("dashboard.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
 		except:
 			db.session.commit()
 			flash("Hubo un error al intentar modificar el registro", "warning")

@@ -342,16 +342,15 @@ def contacts():
 	titulo = "Inicio"
 	return render_template("contacts.html", vtitulo=titulo, values=values, users=users)
 
-# ACTUALIZAR CONTACTOS
+#ACTUALIZAR CONTACTOS
 @app.route("/update/<int:id>", methods=["GET","POST"])
-@login_required #Solo se puede editar con login
 def update(id):
 	form = formularioRegistro()
 	values=User.query.all()
-	mail=User.query.email()
 	users= len(values)
 	actualizar_registro = User.query.get_or_404(id)
 	if request.method == "POST":
+		
 		actualizar_registro.username = request.form["username"]
 		actualizar_registro.apellidos = request.form["apellidos"]
 		actualizar_registro.apellidos2 = request.form["apellidos2"]
@@ -359,11 +358,11 @@ def update(id):
 		actualizar_registro.email = request.form["email"]
 		actualizar_registro.telefono = request.form["telefono"]
 		actualizar_registro.celular = request.form["celular"]
-				
+		
 		try:
 			db.session.commit()
 			flash(f"{form.username.data.title()} {form.apellidos.data.title()} {form.apellidos2.data.title()} ha sido modificad@", "success")
-			return render_template("contacts.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users, mail=mail)
+			return render_template("contacts.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
 		except:
 			db.session.commit()
 			flash("Hubo un error al intentar modificar el registro", "warning")

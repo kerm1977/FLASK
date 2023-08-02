@@ -14,6 +14,7 @@ from wtforms.validators import DataRequired, Length, Email,  EqualTo, Validation
 from datetime import datetime
 from wtforms.widgets import TextArea
 from  flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from sqlalchemy.exc import IntegrityError
 # -----------------------
 
 
@@ -186,7 +187,6 @@ def logout():
    	flash("Sesión finalizada","warning")
    	return redirect(url_for("login"))
    	
-
 # DASHBOARD
 @app.route("/dashboard", methods=["GET","POST"])
 @login_required #Solo se puede editar con login
@@ -348,6 +348,7 @@ def contacts():
 def update(id):
 	form = formularioRegistro()
 	values=User.query.all()
+	mail=User.query.email()
 	users= len(values)
 	actualizar_registro = User.query.get_or_404(id)
 	if request.method == "POST":
@@ -358,17 +359,50 @@ def update(id):
 		actualizar_registro.email = request.form["email"]
 		actualizar_registro.telefono = request.form["telefono"]
 		actualizar_registro.celular = request.form["celular"]
-		
+				
 		try:
 			db.session.commit()
 			flash(f"{form.username.data.title()} {form.apellidos.data.title()} {form.apellidos2.data.title()} ha sido modificad@", "success")
-			return render_template("dashboard.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
+			return render_template("contacts.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users, mail=mail)
 		except:
 			db.session.commit()
 			flash("Hubo un error al intentar modificar el registro", "warning")
 			return render_template("update.html", form=form, actualizar_registro=actualizar_registro)
 	else:
 		return render_template("update.html", form=form, actualizar_registro=actualizar_registro)
+
+
+# ACTUALIZAR PERFIL SOLO SI ESTÁ LOGUEADO DASHBOARD
+@app.route("/update_profile/<int:id>", methods=["GET","POST"])
+@login_required #Solo se puede editar con login
+def update_profile(id):
+	form = formularioRegistro()
+	values=User.query.all()
+	users= len(values)
+	actualizar_registro = User.query.get_or_404(id)
+	if request.method == "POST":
+		actualizar_registro.username 	= 	request.form["username"]
+		actualizar_registro.apellidos 	= 	request.form["apellidos"]
+		actualizar_registro.apellidos2 	= 	request.form["apellidos2"]
+		actualizar_registro.residencia 	= 	request.form["residencia"]
+		actualizar_registro.email 		= 	request.form["email"]
+		actualizar_registro.telefono 	= 	request.form["telefono"]
+		actualizar_registro.celular 	= 	request.form["celular"]
+		
+	
+		try:
+			db.session.commit()
+			flash(f"{form.username.data.title()} {form.apellidos.data.title()} {form.apellidos2.data.title()} ha sido modificad@", "success")
+			return render_template("dashboard.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
+		except IntegrityError:
+			db.session.rollback()
+			flash(f"{form.email.data} YA EXISTE", "danger")
+			return render_template("update_profile.html", form=form, actualizar_registro=actualizar_registro)
+		except:
+			flash("Hubo un error al intentar modificar el registro", "warning")
+			return render_template("update_profile.html", form=form, actualizar_registro=actualizar_registro)
+	else:
+		return render_template("update_profile.html", form=form, actualizar_registro=actualizar_registro)
 
 # BORRAR CONTACTOS
 @app.route("/delete/<int:id>")

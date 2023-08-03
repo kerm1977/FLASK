@@ -19,10 +19,18 @@
         </figure>
       </div>
 
-      <div class="media-content">
+      {%if current_user.id == items.id %}
+      <div class="media-content center">
+        <h1>ACTIVO</h1>
         <p class="title is-4">{{items.username.title()}} {{items.apellidos.title()}} {{items.apellidos2.title()}}</p>
         <p class="subtitle is-6">{{items.email}}</p>
       </div>
+      {%else%}
+        <div class="media-content">
+        <p class="title is-4">{{items.username.title()}} {{items.apellidos.title()}} {{items.apellidos2.title()}}</p>
+        <p class="subtitle is-6">{{items.email}}</p>
+      </div>
+      {%endif%}
 
     </div>
 
@@ -47,10 +55,18 @@
         
         <a href="{{url_for('update', id=items.id)}}"class="card-footer-item">
         Editar Contacto<i hidden>{{items.id}}</i>
-        </a> 
-
-        <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()"> Borrar Contacto<i hidden>{{items.id}}</i>
         </a>
+
+        <!-- si el id del usuario actual es igual al id de la base de datos quita el botón para que no se pueda autoborrar -->
+        {%if current_user.id == items.id %}
+         <!--  <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
+        </a> -->
+        {%else%}       
+        <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
+        </a>
+        {%endif%}
+ 
+
       </footer>      
     </div>
   </div>

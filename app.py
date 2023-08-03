@@ -89,7 +89,8 @@ class User(db.Model, UserMixin):
 	confirmpassword		= 	db.Column(db.String(60),	unique=True, 	nullable=False)
 	imagen_perfil		= 	db.Column(db.String(20),	nullable=False, default="default.jpg")
 	date_added			= 	db.Column(db.DateTime,		nullable=False,	default=datetime.utcnow)
-	# posts 			= 	db.relationship("Post", 	backref="author", 	lazy=True)
+	# El usuario puede tener muchos posts y "Posts" es el nombre de la clase a la que se va a referenica
+	posts_ref 			= 	db.relationship("Posts", 	backref="user")
 
 	#Al agregar un campo hay que migrarlo a la DB y también agregarlo en esta fila con la misma sintaxis y orden
 	def __repr__(self):
@@ -100,9 +101,14 @@ class Posts(db.Model):
 	title 				= 	db.Column(db.String(255))
 	description			=	db.Column(db.Text)
 	content				=	db.Column(db.Text)
-	author				=	db.Column(db.String(255))
+	# author				=	db.Column(db.String(255))
 	date_posted			=	db.Column(db.DateTime, default=datetime.utcnow)
 	slug 				= 	db.Column(db.String(255))
+
+	#Crear una llave foranea entre los Posts y los usuarios referenciado con la llave primaria del usuario
+	# Donde user.id es la clase del modelo llamada  class User y .id el id de esa clase
+	poster_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
 # -----------------------
 
 
@@ -156,7 +162,7 @@ class PostForm(FlaskForm):
 	title = StringField("Titulo", validators=[DataRequired()])
 	description = StringField("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
 	content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
-	author = StringField("Autor", validators=[DataRequired()])
+	poster_id = StringField("Autor", validators=[DataRequired()])
 	slug = StringField("Detalle", validators=[DataRequired()])
 	submit = SubmitField("Crear")
 # -----------------------
@@ -200,18 +206,18 @@ def dashboard():
 def add_post():
 	form = PostForm() #PostForm es la clase modelo creada en la parte superior 	
 	if request.method == "POST":
+		poster = current_user.id
 		post = Posts(
 			title			=		form.title.data, 
 			description		=		form.description.data, 
 			content			=		form.content.data, 
-			author			=		form.author.data, 
+			poster_id 		=		poster, 
 			slug			=		form.slug.data)
 
 		#Limpia el formulario
 		form.title.data 	= 		""
 		form.description.data = 	""
 		form.content.data 	= 		""
-		form.author.data 	= 		""
 		form.slug.data 		= 		""
 
 		#Agregar el formulario a la db

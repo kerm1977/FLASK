@@ -61,7 +61,7 @@
         <!-- descomentar para que se vea el botón de borrar en el usuario activo -->
         {%if current_user.id == items.id %}
 
-          <!-- <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i> -->
+          <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
         </a>
         {%else%}       
         <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>

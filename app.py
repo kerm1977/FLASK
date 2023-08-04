@@ -368,6 +368,10 @@ def update(id):
 			db.session.commit()
 			flash(f"{form.username.data.title()} {form.apellidos.data.title()} {form.apellidos2.data.title()} ha sido modificad@", "success")
 			return render_template("contacts.html", form=form, actualizar_registro=actualizar_registro, values=values, users=users)
+		except IntegrityError:
+			db.session.rollback()
+			flash(f"{form.email.data} YA EXISTE", "danger")
+			return render_template("update_profile.html", form=form, actualizar_registro=actualizar_registro)	
 		except:
 			db.session.commit()
 			flash("Hubo un error al intentar modificar el registro", "warning")

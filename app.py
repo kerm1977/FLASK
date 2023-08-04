@@ -238,8 +238,8 @@ def edit_post(id):
 		post.title			=		form.title.data 
 		post.description	=		form.description.data
 		post.content		=		form.content.data 
-		post.author			=		form.author.data
 		post.slug			=		form.slug.data
+		
 		#Actualizar la base de datos
 		db.session.add(post)
 		db.session.commit()
@@ -249,7 +249,6 @@ def edit_post(id):
 	form.title.data			= 		post.title
 	form.description.data 	= 		post.description
 	form.content.data 		= 		post.content
-	form.author.data 		= 		post.author
 	form.slug.data 			= 		post.slug
 	return render_template("edit_post.html", form=form)
 

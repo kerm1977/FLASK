@@ -1,9 +1,10 @@
 <!-- barra de busqueda -->
 <div class="container-fluid">
-    <form action="" methods="POST"]>
+    <form  method="POST" action="{{url_for('search')}}">
+        {{form.hidden_tag()}}
         <div class="search">
             <div class="buscar">
-                <input class="" type="text" placeholder="Buscar" name="buscar" id="inputSearch" required>
+                <input class="" type="text" placeholder="Buscar" name="searched" id="searched" required>
                 <div class="btn-ico">
                     <button type="submit" value="buscar" class="btn-buscar">
                         <span class="icon-search"></span>

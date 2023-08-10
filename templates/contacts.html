@@ -49,6 +49,8 @@
                     {%endif%}</p>
                   
       <footer class="card-footer">
+      {%if current_user.id == items.id %}
+
         <a href="{{url_for('registro')}}" class="card-footer-item">
         Agregar Usuario
         </a>
@@ -59,11 +61,20 @@
 
         <!-- si el id del usuario actual es igual al id de la base de datos quita el botón para que no se pueda autoborrar -->
         <!-- descomentar para que se vea el botón de borrar en el usuario activo -->
-        {%if current_user.id == items.id %}
-
-          <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
+      
+      {%elif current_user.id != items.id %}
+        <!--  <a href="{{url_for('registro')}}" class="card-footer-item">
+        Agregar Usuario
         </a>
-        {%else%}       
+        
+        <a href="{{url_for('update', id=items.id)}}"class="card-footer-item">
+        Editar Contacto<i hidden>{{items.id}}</i>
+        </a>
+
+        <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
+        </a> -->
+
+      {%else%}       
         <a href="{{url_for('delete', id=items.id)}}" class="card-footer-item" onclick="return ConfirmDelete()">     Borrar Contacto<i hidden></i>
         </a>
         {%endif%}
@@ -74,7 +85,7 @@
   </div>
 </div>
 
-<hr>
+
 {%endfor%}
 </div>
 {% endblock %}

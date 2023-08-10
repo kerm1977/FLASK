@@ -6,6 +6,8 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='fonts/style.css') }}">
     <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='webfonts') }}"> -->
+
+
 	{%if vtitulo%}
         <title> Flask - {{vtitulo}} </title>
     {%else%}
@@ -21,9 +23,11 @@
     {% include 'flash.html' %}  
 <!-- CONTENIDO DE HERENCIA -->
      
-
     {% block content %}
     {% endblock %}
+
+
+
 
 <!-- VENTANA MODAL CSS -->
     <!-- <label for="btn-modal"><h1>pruebame</h1></label> -->
@@ -64,6 +68,7 @@
     <script src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
 <!-- fin bootstrap js scripts no borrar     -->
+
 
 <!--Scroll arriba -->
     <a href="#0" class="cd-top">Top</a>

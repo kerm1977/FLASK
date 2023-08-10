@@ -42,7 +42,7 @@ bcrypt 	= Bcrypt(app)
 pw_hash = bcrypt.generate_password_hash("SECRET_KEY")
 bcrypt.check_password_hash(pw_hash, "SECRET_KEY")
 app.config['SECRET_KEY'] = pw_hash
-# print(pw_hash)
+# flash(pw_hash)
 # -----------------------
 
 
@@ -199,22 +199,36 @@ def base():
 # BUSCADOR
 @app.route("/search", methods=["POST"])
 def search():
-	posts = PostForm()
+	# Trae los datos del formulario y clase posts (FlaskForms)
 	form = SearchForm()
-	posts = Posts.query
-	values = Posts.query.all()
-	# if request.method == "POST":
-	if form.validate_on_submit():
-		# Captura los datos del input de busqueda
-		busqueda = form.searched.data
+	# Trae los datos del formulario de busqueda (FlaskForms)
+	busqueda 	= 	form.searched.data
+	# Trae los usuarios de la DB
+	usuarios 	= 	User.query.all()
+	# Trae los posts de la DB
+	posteo 		= 	Posts.query.all()
+	# Crear una lista vacia para almacenar los datos que se agregan a busqueda
+	
+	if request.method == "POST":
+		posts=posteo		
+		#for indice in posteo:
+			#Indice almacena el valor de la consulta de la base de datos
+			#indice = indice.title.split() #Divide los titulos en palabras individuales
+			#indice = str(indice)# Convierte cada palabra en string
+			#if busqueda in indice:	#Si lo digitado en el buscador está dentro del indice
+				#flash(f"Si está {indice}") #imprime que si
 		# Consulta la db
-		posts = posts.filter(Posts.title.like('%' + busqueda + '%'))
-		posts = posts.order_by(Posts.title).all()
+		# posts = posts.filter(Posts.content.like('%' + post.searched + '%'))	
+		# posts = posts.order_by(Posts.title).all()
+		
 		return render_template("search.html", 
-								form=form, 
-								busqueda=busqueda,  
-								posts=posts,
-								values=values)
+								form 			=	form, 
+								busqueda 		=	busqueda,
+								usuarios		= 	usuarios,
+								posteo			=	posteo,
+								posts 			= 	posts
+								)
+
 
 
 # LOGOUT
@@ -307,7 +321,7 @@ def delete_post(id):
 @app.route("/post")
 @login_required #Solo se puede editar con login
 def post():
-	post = Posts.query.order_by(Posts.date_posted)
+	post = Posts.query.all()
 	return render_template("post.html", post=post)
 
 # LEER POST INDIVIDUALMENTE

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %} 
+
+
+<div class="container">
+<h1>BUSQUEDA AVANZADA</h1>
+<hr>
+ 	<input type="text" name="buscador" id="buscador" placeholder="Buscar...">
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" class="">ID</th>
+      <th scope="col" class="">Titulo</th>
+      <th scope="col" class="">Descrípción</th>
+      <th scope="col" class="">Nombre</th>
+      <th scope="col" class="">Apellido</th>
+      <th scope="col" class="">Fechas</th>
+      <th scope="col" class="">Fechas</th>
+    </tr>
+  </thead>
+  {%for post in posts%}
+  <tbody>
+    <tr class="articulo">
+      <td scope="row"  class="">{{post.id}}</td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.title}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.description}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.user.username}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.user.apellidos}}</a></td>
+      <td class="">{{post.date_posted}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">VER</a></td>
+    </tr>
+  </tbody>
+  {%endfor%}
+
+</table>
+
+	
+				
+</div>
+{% endblock %}
+
+<!-- https://www.youtube.com/watch?v=I3stKiPIb-w&t=55s -->

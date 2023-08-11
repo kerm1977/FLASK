@@ -3,10 +3,12 @@
     <form  method="POST" action="{{url_for('search')}}">
         {{form.hidden_tag()}}
         <div class="search">
+            
             <div class="buscar">
                 <input class="" type="text" placeholder="Buscar" name="searched" id="searched" required>
+
                 <div class="btn-ico">
-                    <button type="submit" value="buscar" class="btn-buscar">
+                    <button type="submit" value="buscar" class="btn-buscar" id="buscar">
                         <span class="icon-search"></span>
                     </button>
                 </div>

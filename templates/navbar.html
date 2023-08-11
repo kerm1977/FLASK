@@ -8,6 +8,7 @@
         {%if current_user.is_authenticated%}
             <a href="{{url_for('dashboard')}}"><i class="icomoon-nav-ico icon-meter"></i></a>
         {%else%}
+            <a href="{{url_for('advanceSearch')}}"><i class="icomoon-nav-ico icon-eye"></i></a>
             <a href="{{url_for('login')}}"><i class="icomoon-nav-ico icon-user-plus"></i></a>
             <a href="{{url_for('dashboard')}}"><i class="icomoon-nav-ico icon-meter"></i></a>
         {%endif%}

@@ -4,9 +4,11 @@
 <div class="container">
 	<hr>
 	<h2>Su busqueda: </h2>
+	{{busqueda}}
+
 	
 	{%for post in posts%}
-		<a href="#">{{post.title}} <br></a>
+		<a href="{{url_for('posts',id=post.id)}}">{{post.title}} <br></a>
 		{{post.description}} <br>
 		{{post.content}} <br>
 		{{post.user.username}}
@@ -14,29 +16,6 @@
 	{%else%}
 		{{busqueda}} no se encuentra
 	{%endfor%}	
-
-	
-		
-	
-
-	
-				
-	
-	
-		
-
-		
-
-
-		
-
-
-
-	
-	
-		
-	
-	
 
 
 

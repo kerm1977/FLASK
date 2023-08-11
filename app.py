@@ -15,6 +15,7 @@ from datetime import datetime
 from wtforms.widgets import TextArea
 from  flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import or_
 # -----------------------
 
 
@@ -216,6 +217,10 @@ def search():
 								posts=posts,
 								values=values)
 
+@app.route("/advanceSearch")
+def advanceSearch():
+	posts = Posts.query.all()
+	return render_template("advanceSearch.html", posts=posts)
 
 # LOGOUT
 @app.route("/logout")
@@ -312,7 +317,7 @@ def post():
 
 # LEER POST INDIVIDUALMENTE
 @app.route("/posts/<int:id>")
-@login_required #Solo se puede editar con login
+#@login_required
 def posts(id):
 	post = Posts.query.get_or_404(id)
 	return render_template("posts.html", post=post)

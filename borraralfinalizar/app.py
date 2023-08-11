@@ -201,21 +201,21 @@ def base():
 def search():
 	posts = PostForm()
 	form = SearchForm()
-	posters = PostForm()
 	posts = Posts.query
 	values = Posts.query.all()
 	# if request.method == "POST":
 	if form.validate_on_submit():
 		# Captura los datos del input de busqueda
-		post.searched = form.searched.data
+		busqueda = form.searched.data
 		# Consulta la db
-		posts = posts.filter(Posts.content.like('%' + post.searched + '%'))	
+		posts = posts.filter(Posts.title.like('%' + busqueda + '%'))
 		posts = posts.order_by(Posts.title).all()
 		return render_template("search.html", 
 								form=form, 
-								searched=post.searched,  
+								busqueda=busqueda,  
 								posts=posts,
 								values=values)
+
 
 # LOGOUT
 @app.route("/logout")

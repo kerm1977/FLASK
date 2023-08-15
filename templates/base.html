@@ -1,5 +1,5 @@
 <html lang="en">
-<head>
+<head >
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}">
@@ -7,8 +7,8 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='fonts/style.css') }}">
     <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='webfonts') }}"> -->
 
-
-	{%if vtitulo%}
+  
+   	{%if vtitulo%}
         <title> Flask - {{vtitulo}} </title>
     {%else%}
         <!-- Este titulo es por default -->
@@ -77,13 +77,14 @@
 <!--Fin scroll arriba -->
 
 
-<script src="{{ url_for('static', filename='js/view_pass.js') }}"></script>
-<script src="{{ url_for('static', filename='js/view_pass2.js') }}"></script>
-<script src="{{ url_for('static', filename='js/buscador.js') }}"></script>
-<script src="{{ url_for('static', filename='js/tabla.js') }}"></script>
-<script src="{{ url_for('static', filename='js/deleteUsers.js') }}"></script>
-<script src="{{ url_for('static', filename='js/navsticky.js') }}"></script> 
-
+    <script src="{{ url_for('static', filename='js/view_pass.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/view_pass2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/buscador.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tabla.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/deleteUsers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navsticky.js') }}"></script> 
+    <script src="{{ url_for('static', filename='js/cerrar.js') }}"></script> 
+    <!-- <script src="{{ url_for('static', filename='js/inhabilitar.js') }}"></script>  -->
 </body>
 </html>
 

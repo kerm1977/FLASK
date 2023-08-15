@@ -219,6 +219,7 @@ def search():
 
 @app.route("/advanceSearch")
 def advanceSearch():
+
 	posts = Posts.query.all()
 	return render_template("advanceSearch.html", posts=posts)
 

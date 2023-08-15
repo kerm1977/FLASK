@@ -5,30 +5,36 @@
 <div class="container">
 <h1>BUSQUEDA AVANZADA</h1>
 <hr>
- 	<input type="text" name="buscador" id="buscador" placeholder="Buscar...">
 
+<div class="container">
+  <div class="input-advanceSearch">
+ 	<input class="input input-advanceSearch is-rounded" type="text" name="buscador" id="buscador" placeholder="Buscar...">
+  </div>
 
+{{ form.hidden_tag() }}
 
-<table class="table">
+<table class="table" >
   <thead>
-    <tr>
-      <th scope="col" class="">ID</th>
-      <th scope="col" class="">Titulo</th>
-      <th scope="col" class="">Descrípción</th>
-      <th scope="col" class="">Nombre</th>
-      <th scope="col" class="">Apellido</th>
-      <th scope="col" class="">Fechas</th>
-      <th scope="col" class="">Fechas</th>
+    <tr >
+      <th >ID</th>
+      <th >Titulo</th>
+      <th >Descrípción</th>
+      <th >Nombre</th>
+      <th >Apellido</th>
+      <th >Fechas</th>
+      <th >Fechas</th>
     </tr>
   </thead>
+
   {%for post in posts%}
+
   <tbody>
-    <tr class="articulo">
+    <tr class="articulo" id="table">
       <td scope="row"  class="">{{post.id}}</td>
       <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.title}}</a></td>
       <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.description}}</a></td>
-      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.user.username}}</a></td>
-      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.user.apellidos}}</a></td>
+      <td class="">{{post.user.username}}</a></td>
+      <td class="">{{post.user.apellidos}}</a></td>
       <td class="">{{post.date_posted}}</a></td>
       <td class=""><a href="{{url_for('posts',id=post.id)}}">VER</a></td>
     </tr>

@@ -4,7 +4,7 @@
 <div class="container">
 	<hr>
 	<h2>Su busqueda: </h2>
-	{{busqueda}}
+
 
 	
 	{%for post in posts%}
@@ -14,7 +14,11 @@
 		{{post.user.username}}
 		<hr>
 	{%else%}
-		{{busqueda}} no se encuentra
+		{{busqueda}} no se encuentra <br>
+
+
+		<a href="{{url_for('advanceSearch')}}">BUSQUEDA DETALLADA</a>
+
 	{%endfor%}	
 
 

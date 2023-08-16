@@ -21,7 +21,7 @@
 
 	    <div class="media-content">
 	      	<div class="content">
-		      	{{post.title}}
+		      	{{post.title|safe}}
 		        <!-- <p><strong>{{post.author}} -->
 		        </strong> <small>{{post.slug}}</small>
 		        {{post.description}}</p>
@@ -32,7 +32,7 @@
 	</article>
 		
 		<p>{{post.title}}</p>
-		<p>{{post.content}}</p>
+		<p>{{post.content|safe}}</p>
 		<p>Fecha {{post.date_posted}}</p>
 		
 		</div>

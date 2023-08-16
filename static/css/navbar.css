@@ -1,6 +1,6 @@
 nav{
 	position: fixed;
-	z-index: 200;
+	z-index: 1000000;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -11,14 +11,17 @@ nav{
 	/*Color de fondo*/
 }
 
-.list-ico{
-	display: block;
-	float:right;
-	margin: 24px 0px 0px 0px;
-	padding: 0px 10px 0px 0px;
-	font-size: 35px;
-	}
-	
+
+.search_bar{
+	float: left;
+	display: flex;
+	align-items: center;
+}
+.enlaces{
+	float: right;
+	margin-top: 30px;
+}
+
 .icomoon-nav-ico{
 	font-size: 35px;
 	padding: 0px 20px 0px 0px;

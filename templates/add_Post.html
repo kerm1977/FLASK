@@ -2,14 +2,13 @@
 {% block content %} 
 
 
-
 <div class="container posts ">
 	<div class="column">
 		<form action="" method="POST">
 			{{ form.hidden_tag() }}
 
 			{{ form.title.label(class="label") }}
-			{{ form.title(class="input is-normal is-rounded") }}
+			{{ form.title(class="", rows="2") }}
 			<hr>
 			{{ form.description.label(class="label") }}
 			{{ form.description(class="input is-normal", rows="5") }}
@@ -22,6 +21,10 @@
 
 			{{ form.submit(class="button is-success is-ligh mt-5")}}
 		</form>
+
+		{{ckeditor.load()}}
+		{{ckeditor.config(name="title", class="form-control", rows="2")}}
+		{{ckeditor.config(name="content")}}
 	</div>
 </div>
 

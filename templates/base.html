@@ -18,9 +18,10 @@
 
 <body>
       
-    {% include 'navbar.html' %}    
+    {% include 'navbar.html' %} 
+    {% include 'flash.html' %}    
     {% include 'buscar.html' %} 
-    {% include 'flash.html' %}  
+    
 <!-- CONTENIDO DE HERENCIA -->
      
     {% block content %}
@@ -32,7 +33,7 @@
 <!-- VENTANA MODAL CSS -->
     <!-- <label for="btn-modal"><h1>pruebame</h1></label> -->
     <!-- Ventana Modal -->
-    <input type="checkbox" id="btn-modal">
+  <!--   <input type="checkbox" id="btn-modal">
     <div class="container-modal">
         <div class="content-modal">
         <h2>MODAL</h2>
@@ -44,7 +45,7 @@
             <a href="{{ url_for('contacts')}}"><label for="btn-modal btn-no">NO</a></label>
         </div>
         </div>
-    </div>
+    </div> -->
 
 <!-- boton de refresh trabaja con refresh.css no borrar -->
     <div class="container">

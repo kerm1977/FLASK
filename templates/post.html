@@ -5,6 +5,7 @@
 <div class="container container-post">
 	{%for post in post%}
 
+
 		<div class="box">
 	  <article class="media">
 	    <div class="media-left">
@@ -14,11 +15,11 @@
 	    </div>
 	    <div class="media-content">
 	      <div class="content">
-	      	{{post.title}}
+	      	{{post.title|safe}}
 	        <p>
 	          <strong>{{post.user.username}}</strong> <small>{{post.slug}}</small> 
 	          <br>
-	        {{post.content}}
+	        {{post.content|safe}}
 	        </p>
 
 	      <br>{{post.date_posted}}<br>

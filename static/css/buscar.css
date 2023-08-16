@@ -1,16 +1,8 @@
-.search{
-	margin-top: -245px;
-	margin-left: 20px;
-	z-index: 1000000;
-	position:fixed;
-	box-shadow: 10 10 10 10;
-}
-
-
 .buscar{
 	position: absolute;
 	padding: 5px;
 	z-index: 1000;
+	margin-top: -135;
 }
 
 .buscar input{
@@ -67,7 +59,7 @@
 	}
 	
 	.buscar input:focus{
-		width: 270px;
+		width: 400px;
 	}
 
 	.btn-buscar{

@@ -13,9 +13,11 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Hidde
 from wtforms.validators import DataRequired, Length, Email,  EqualTo, ValidationError
 from datetime import datetime
 from wtforms.widgets import TextArea
-from  flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import or_
+from flask_ckeditor import CKEditor, CKEditorField #Editor enriquecido con instancia ckeditor = CKEditor(app)
+
 # -----------------------
 
 
@@ -30,6 +32,8 @@ from sqlalchemy import or_
 # /::::::::::::::::::::/
 # -----------------------
 app = Flask(__name__)
+#Editor enriquecido
+ckeditor = CKEditor(app)
 import os
 #Ruta de la DB
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/db.db" #CONECTOR - RUTA ABSOLUTA
@@ -159,9 +163,10 @@ class formularioLogin(FlaskForm):
 	submit 				= 	SubmitField		('Ingresar')
 
 class PostForm(FlaskForm):
-	title = StringField("Titulo", validators=[DataRequired()])
+	title = CKEditorField("Titulo", validators=[DataRequired()])
 	description = StringField("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
-	content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
+	# content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
+	content = CKEditorField("Contenido", validators=[DataRequired()])
 	poster_id = StringField("Autor", validators=[DataRequired()])
 	slug = StringField("Detalle", validators=[DataRequired()])
 	submit = SubmitField("Crear")

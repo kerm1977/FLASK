@@ -10,7 +10,7 @@
 	{%for post in posts%}
 		<a href="{{url_for('posts',id=post.id)}}">{{post.title}} <br></a>
 		{{post.description}} <br>
-		{{post.content}} <br>
+		{{post.content|safe}} <br>
 		{{post.user.username}}
 		<hr>
 	{%else%}

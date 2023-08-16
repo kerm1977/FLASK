@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %} 
-
+<!-- |safe se encarga de reconocer caracteres como negritas, itálicas h1-h6 
+	formatos etc sin eso sale la etiqueta pura -->
 
 <div class="container posts ">
 	<div class="column">
@@ -8,23 +9,25 @@
 			{{ form.hidden_tag() }}
 
 			{{ form.title.label(class="label") }}
-			{{ form.title(class="", rows="2") }}
+			{{ form.title(class="input-title") }}
 			<hr>
 			{{ form.description.label(class="label") }}
 			{{ form.description(class="input is-normal", rows="5") }}
-
+			<br>
 			{{ form.content.label(class="label") }}
 			{{ form.content(class="input is-normal", rows="5") }}
-
+			<br>
 			{{ form.slug.label(class="label") }}
 			{{ form.slug(class="input is-normal is-rounded") }}
-
+			<br>
 			{{ form.submit(class="button is-success is-ligh mt-5")}}
 		</form>
 
 		{{ckeditor.load()}}
-		{{ckeditor.config(name="title", class="form-control", rows="2")}}
-		{{ckeditor.config(name="content")}}
+		{{ckeditor.config(name="title", height=100)}}
+		{{ckeditor.config(name="description", height=100)}}
+		{{ckeditor.config(name="content", height=400)}}
+		{{ckeditor.config(name="slug", height=100)}}
 	</div>
 </div>
 

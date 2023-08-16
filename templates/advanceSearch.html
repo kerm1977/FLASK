@@ -31,11 +31,11 @@
   <tbody>
     <tr class="articulo" id="table">
       <td scope="row"  class="">{{post.id}}</td>
-      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.title}}</a></td>
-      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.description}}</a></td>
-      <td class="">{{post.user.username}}</a></td>
-      <td class="">{{post.user.apellidos}}</a></td>
-      <td class="">{{post.date_posted}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.title.upper()|safe}}</a></td>
+      <td class=""><a href="{{url_for('posts',id=post.id)}}">{{post.description.title()|safe}}</a></td>
+      <td class="">{{post.user.username.title()|safe}}</a></td>
+      <td class="">{{post.user.apellidos.title()|safe}}</a></td>
+      <td class="">{{post.date_posted|safe}}</a></td>
       <td class=""><a href="{{url_for('posts',id=post.id)}}">VER</a></td>
     </tr>
   </tbody>

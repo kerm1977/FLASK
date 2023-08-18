@@ -2,8 +2,8 @@
 # -----------------------
 # /::::::::::::::::::::/
 # -----------------------
-from flask import Flask
-from datetime import datetime
+from flask import session, Flask
+from datetime import datetime, timedelta
 from flask import request, make_response, redirect, render_template, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -11,7 +11,6 @@ from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField, EmailField, IntegerField
 from wtforms.validators import DataRequired, Length, Email,  EqualTo, ValidationError
-from datetime import datetime
 from wtforms.widgets import TextArea
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from sqlalchemy.exc import IntegrityError
@@ -38,6 +37,8 @@ import os
 #Ruta de la DB
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/db.db" #CONECTOR - RUTA ABSOLUTA
 app.config['SQLALCHEMY_DATABASE_URI'] = dbdir
+#importa arriba y configura aquí el tiempo que va a estar activa la session.
+
 
 db = SQLAlchemy(app)
 app.app_context().push()
@@ -334,6 +335,8 @@ def login():
 	titulo="Login"
 	form = formularioLogin()
 	if request.method == "POST":
+		session.permanent = True
+		app.permanent_session_lifetime = timedelta(minutes=3)
 		user = User.query.filter_by(email=form.email.data.lower()).first()
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)

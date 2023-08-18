@@ -102,7 +102,7 @@ class User(db.Model, UserMixin):
 		return f"User('{self.username}',{self.apellidos}',{self.apellidos2}','{self.residencia}','{self.email}','{self.telefono}','{self.celular}','{self.password}','{self.confirmpassword}','{self.imagen_perfil}')"
 
 class Posts(db.Model):
-	id 					=	db.Column(db.Integer, 		primary_key=True)
+	id 					=	db.Column(db.Integer, primary_key=True)
 	title 				= 	db.Column(db.String(255))
 	description			=	db.Column(db.Text)
 	content				=	db.Column(db.Text)

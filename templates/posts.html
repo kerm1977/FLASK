@@ -43,7 +43,7 @@
 		
 		<p>{{post.title|safe}}</p>
 		<p>{{post.content|safe}}</p>
-		<p>Fecha {{post.date_posted}}</p>
+		<p>Fecha {{post.date_posted.strftime('%d-%m-%Y')}}</p>
 		
 		</div>
 		</div>

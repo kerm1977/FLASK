@@ -2,7 +2,7 @@
 # -----------------------
 # /::::::::::::::::::::/
 # -----------------------
-from flask import session, Flask
+from flask import session, Flask, abort, g
 from datetime import datetime, timedelta
 from flask import request, make_response, redirect, render_template, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -16,6 +16,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import or_
 from flask_ckeditor import CKEditor, CKEditorField #Editor enriquecido con instancia ckeditor = CKEditor(app)
+from wtforms import validators
+from time import sleep
 
 # -----------------------
 
@@ -113,7 +115,6 @@ class Posts(db.Model):
 	#Crear una llave foranea entre los Posts y los usuarios referenciado con la llave primaria del usuario
 	# Donde user.id es la clase del modelo llamada  class User y .id el id de esa clase
 	poster_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-
 # -----------------------
 
 
@@ -128,7 +129,6 @@ class Posts(db.Model):
 # /::::::::::::::::::::/
 # -----------------------
 class formularioRegistro(FlaskForm):
-
 	# Para agregar un campo a la DB se agrega dentro de este formulario, también 
 	# en el modelo y la función _repr_ del modelo, Además del formulario registro 
 	# y en  los formularios que se van a representar el campo. luego se migra  el 
@@ -138,12 +138,12 @@ class formularioRegistro(FlaskForm):
 	#Estos son los campos que van a crearse al momento de crear la base de datos
  # CAMPOS EN DB			   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES	
 	username 			= 	StringField		('username', validators=[DataRequired(), Length(min=3, max=20)]) 
-	apellidos 			= 	StringField		('apellidos',) 
-	apellidos2 			= 	StringField		('apellidos2',)
-	residencia			= 	StringField		('residencia',)
+	apellidos 			= 	StringField		('apellidos', validators=[Length(min=3, max=20)]) 
+	apellidos2 			= 	StringField		('apellidos2', validators=[Length(min=3, max=20)])
+	residencia			= 	StringField		('residencia', validators=[Length(min=3, max=100)])
 	email 				= 	EmailField		('email', 	validators=[DataRequired(), Email()])
-	telefono			= 	IntegerField	('telefono', validators=[Length(min=8, max=15)])
-	celular				= 	IntegerField	('celular', validators=[Length(min=8, max=15)])
+	telefono			= 	IntegerField	('telefono', [validators.NumberRange(min=8, message="Digite un valor entre 8 y 12")])
+	celular				= 	IntegerField	('celular', [validators.NumberRange(min=8, message="Digite un valor entre 8 y 12")])
 	password 			= 	PasswordField	('password',validators=[DataRequired(), Length(min=8, max=20)]) 
 	confirmpassword 	= 	PasswordField	('confirmpassword',validators=[DataRequired(), EqualTo('password', message='Password No Coincide')], id="confirmpassword")
 	submit 				= 	SubmitField		('Registrarme')
@@ -164,20 +164,19 @@ class formularioLogin(FlaskForm):
 	submit 				= 	SubmitField		('Ingresar')
 
 class PostForm(FlaskForm):
-	title = CKEditorField("Titulo", validators=[DataRequired()])
-	description = StringField("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
+	title 				= 	StringField		("Titulo", validators=[DataRequired()])
+	description 		= 	StringField		("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
 	# content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
-	content = CKEditorField("Contenido", validators=[DataRequired()])
-	poster_id = StringField("Autor", validators=[DataRequired()])
-	slug = StringField("Detalle", validators=[DataRequired()])
-	submit = SubmitField("Crear")
+	content 			= 	CKEditorField	("Contenido", validators=[DataRequired()])
+	poster_id 			= 	StringField		("Autor", validators=[DataRequired()])
+	slug 				= 	StringField		("Detalle", validators=[DataRequired()])
+	submit 				= 	SubmitField		("Crear")
 
-# FORMULARIO DE BÚSQUEDA
 class SearchForm(FlaskForm):
- # CAMPOS EN DB			   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES
+	# FORMULARIO DE BÚSQUEDA
+ 	# CAMPOS EN DB		   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES
   	searched			= 	StringField		('Buscar', validators=[DataRequired()])	
   	submit 				= 	SubmitField		('Buscar')
-
 # -----------------------
 
 
@@ -197,6 +196,11 @@ class SearchForm(FlaskForm):
 def home():
 	title = "Home"
 	return render_template("index.html", title=title)
+
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=10)
 
 @app.context_processor
 def base():
@@ -225,7 +229,6 @@ def search():
 
 @app.route("/advanceSearch")
 def advanceSearch():
-
 	posts = Posts.query.all()
 	return render_template("advanceSearch.html", posts=posts)
 
@@ -335,8 +338,15 @@ def login():
 	titulo="Login"
 	form = formularioLogin()
 	if request.method == "POST":
-		session.permanent = True
-		app.permanent_session_lifetime = timedelta(minutes=3)
+		# Caducidad de sesion con timedelta (from datetime import datetime, timedelta) para que funcione
+		# session.permanent = True
+		# app.permanent_session_lifetime = timedelta(seconds=30)
+		# session.modified = True
+		# flash("CADUCADO", "alert-warning")
+		# return redirect("login")
+
+
+		
 		user = User.query.filter_by(email=form.email.data.lower()).first()
 		if user and bcrypt.check_password_hash(user.password, form.password.data):
 			login_user(user)

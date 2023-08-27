@@ -115,6 +115,7 @@ class Posts(db.Model):
 	#Crear una llave foranea entre los Posts y los usuarios referenciado con la llave primaria del usuario
 	# Donde user.id es la clase del modelo llamada  class User y .id el id de esa clase
 	poster_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
 # -----------------------
 
 
@@ -129,6 +130,7 @@ class Posts(db.Model):
 # /::::::::::::::::::::/
 # -----------------------
 class formularioRegistro(FlaskForm):
+
 	# Para agregar un campo a la DB se agrega dentro de este formulario, también 
 	# en el modelo y la función _repr_ del modelo, Además del formulario registro 
 	# y en  los formularios que se van a representar el campo. luego se migra  el 
@@ -142,8 +144,8 @@ class formularioRegistro(FlaskForm):
 	apellidos2 			= 	StringField		('apellidos2', validators=[Length(min=3, max=20)])
 	residencia			= 	StringField		('residencia', validators=[Length(min=3, max=100)])
 	email 				= 	EmailField		('email', 	validators=[DataRequired(), Email()])
-	telefono			= 	IntegerField	('telefono', [validators.NumberRange(min=8, message="Digite un valor entre 8 y 12")])
-	celular				= 	IntegerField	('celular', [validators.NumberRange(min=8, message="Digite un valor entre 8 y 12")])
+	telefono			= 	IntegerField	('telefono', [validators.NumberRange(min=8, max=12, message="Digite un valor entre 8 y 12")])
+	celular				= 	IntegerField	('celular', [validators.NumberRange(min=8, max=12, message="Digite un valor entre 8 y 12")])
 	password 			= 	PasswordField	('password',validators=[DataRequired(), Length(min=8, max=20)]) 
 	confirmpassword 	= 	PasswordField	('confirmpassword',validators=[DataRequired(), EqualTo('password', message='Password No Coincide')], id="confirmpassword")
 	submit 				= 	SubmitField		('Registrarme')
@@ -164,19 +166,20 @@ class formularioLogin(FlaskForm):
 	submit 				= 	SubmitField		('Ingresar')
 
 class PostForm(FlaskForm):
-	title 				= 	StringField		("Titulo", validators=[DataRequired()])
-	description 		= 	StringField		("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
+	title = CKEditorField("Titulo", validators=[DataRequired()])
+	description = StringField("Breve Descripción", validators=[DataRequired()], widget=TextArea())	
 	# content = StringField("Contenido", validators=[DataRequired()], widget=TextArea())
-	content 			= 	CKEditorField	("Contenido", validators=[DataRequired()])
-	poster_id 			= 	StringField		("Autor", validators=[DataRequired()])
-	slug 				= 	StringField		("Detalle", validators=[DataRequired()])
-	submit 				= 	SubmitField		("Crear")
+	content = CKEditorField("Contenido", validators=[DataRequired()])
+	poster_id = StringField("Autor", validators=[DataRequired()])
+	slug = StringField("Detalle", validators=[DataRequired()])
+	submit = SubmitField("Crear")
 
+# FORMULARIO DE BÚSQUEDA
 class SearchForm(FlaskForm):
-	# FORMULARIO DE BÚSQUEDA
- 	# CAMPOS EN DB		   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES
+ # CAMPOS EN DB			   TIPO DE DATO		NOMBRE DE CAMPO EN HTML Y VALIDACIONES
   	searched			= 	StringField		('Buscar', validators=[DataRequired()])	
   	submit 				= 	SubmitField		('Buscar')
+
 # -----------------------
 
 
@@ -201,6 +204,7 @@ def home():
 def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=10)
+ 
 
 @app.context_processor
 def base():
@@ -229,6 +233,7 @@ def search():
 
 @app.route("/advanceSearch")
 def advanceSearch():
+
 	posts = Posts.query.all()
 	return render_template("advanceSearch.html", posts=posts)
 
